@@ -1,6 +1,9 @@
+import 'package:clothing/shared/firebase.dart';
+import 'package:clothing/shared/router.dart';
 import 'package:clothing/views/auth/auth_sacffold.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -12,15 +15,37 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
+  final _cnfpassCtrl = TextEditingController();
+
+  final _namectrl = TextEditingController();
+
+  final _phoneCtrl = TextEditingController();
+
   bool isLoading = false;
 
   Future<void> _register() async {
+    if (_cnfpassCtrl.text.toLowerCase() != _passCtrl.text.toLowerCase()) {
+      _showError("Password does not match");
+      return;
+    }
     setState(() => isLoading = true);
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final res = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailCtrl.text.trim(),
         password: _passCtrl.text.trim(),
       );
+      if (res.user != null) {
+        await FBFireStore.users.doc(res.user!.uid).set({
+          'uid': res.user!.uid,
+          'name': _namectrl.text.trim(),
+          'email': _emailCtrl.text.trim(),
+          'phone': _phoneCtrl,
+          'address': '',
+          'balance': 1000,
+          'isAdmin': false,
+        });
+        context.go(Routes.home);
+      }
     } on FirebaseAuthException catch (e) {
       _showError(e.message ?? "Registration failed");
     } finally {
@@ -54,6 +79,9 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return AuthScaffold(
+      cnfPassCtrl: _cnfpassCtrl,
+      namaCtrl: _namectrl,
+      phonectrl: _phoneCtrl,
       title: 'Create Account 🎉',
       subtitle: 'Join ReWear and make impact',
       buttonText: 'Register',

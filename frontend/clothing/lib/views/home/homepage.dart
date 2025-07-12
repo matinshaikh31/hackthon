@@ -159,17 +159,12 @@ class NavBar extends StatelessWidget {
         children: [
           const Icon(Icons.recycling, color: Colors.green),
           const SizedBox(width: 8),
-          InkWell(
-            onTap: () {
-              context.go(Routes.home);
-            },
-            child: Text(
-              "ReWear",
-              style: TextStyle(
-                color: Colors.green.shade800,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+          Text(
+            "ReWear",
+            style: TextStyle(
+              color: Colors.green.shade800,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(width: 500),

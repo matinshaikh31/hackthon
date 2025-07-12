@@ -9,6 +9,11 @@ class AuthScaffold extends StatelessWidget {
   final bool isLoading;
   final TextEditingController emailCtrl;
   final TextEditingController passCtrl;
+  final TextEditingController? namaCtrl;
+  final TextEditingController? cnfPassCtrl;
+
+  final TextEditingController? phonectrl;
+
   final Widget footer;
 
   const AuthScaffold({
@@ -21,6 +26,9 @@ class AuthScaffold extends StatelessWidget {
     required this.emailCtrl,
     required this.passCtrl,
     required this.footer,
+    this.namaCtrl,
+    this.cnfPassCtrl,
+    this.phonectrl,
   });
 
   @override
@@ -63,13 +71,33 @@ class AuthScaffold extends StatelessWidget {
                   style: const TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: 24),
+                const SizedBox(height: 16),
                 TextField(
-                  controller: emailCtrl,
+                  controller: namaCtrl,
                   decoration: const InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'Name',
                     border: OutlineInputBorder(),
                   ),
                 ),
+                if (buttonText != 'Login') ...[
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: phonectrl,
+                    decoration: const InputDecoration(
+                      labelText: 'Phone',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  TextField(
+                    controller: emailCtrl,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 16),
                 TextField(
                   controller: passCtrl,
@@ -79,6 +107,18 @@ class AuthScaffold extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                 ),
+
+                if (buttonText != 'Login') ...[
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: cnfPassCtrl,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Confirm Password',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: isLoading ? null : onSubmit,
