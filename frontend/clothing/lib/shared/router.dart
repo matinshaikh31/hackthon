@@ -1,16 +1,19 @@
 import 'dart:async';
 
-import 'package:clothing/views/account/account.dart';
+import 'package:clothing/views/admin/admin_main.dart';
+import 'package:clothing/views/admin/manage%20users/manageuser.dart';
+import 'package:clothing/views/admin/order/orders.dart';
+import 'package:clothing/views/admin/settings/settings.dart';
 import 'package:clothing/views/home/homepage.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:clothing/views/product/productdetail.dart';
 import 'package:clothing/views/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'error_page.dart';
-import 'methods.dart';
 
-final routeHistory = [Routes.home];
+final routeHistory = [Routes.users];
 
 final GoRouter appRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -19,7 +22,24 @@ final GoRouter appRouter = GoRouter(
   redirect: redirector,
   errorBuilder: (context, state) => const ErrorPage(),
 );
+
 FutureOr<String?> redirector(BuildContext context, GoRouterState state) {
+  if (state.uri.path ==
+      appRouter.routerDelegate.currentConfiguration.uri.path) {
+    throw Exception('Router declined redirect');
+  }
+  return null;
+
+  // routeHistory.add(state.uri.path);
+  // if (isLoggedIn() && state.fullPath == Routes.auth) {
+  //   // return routeHistory.reversed.elementAt(1);
+  //   return Routes.account;
+  //   // return Routes.home;
+  // }
+  // return null;
+}
+
+/* FutureOr<String?> redirector(BuildContext context, GoRouterState state) {
   routeHistory.add(state.uri.path);
   if (isLoggedIn() && state.fullPath == Routes.auth) {
     // return routeHistory.reversed.elementAt(1);
@@ -28,7 +48,7 @@ FutureOr<String?> redirector(BuildContext context, GoRouterState state) {
   }
   return null;
 }
-
+ */
 List<RouteBase> get _routes {
   return <RouteBase>[
     GoRoute(
@@ -69,7 +89,9 @@ List<RouteBase> get _routes {
 
 class Routes {
   static const home = "/";
-  static const category = "/category";
+  // static const admin = "/admin";
+  static const users = "/users";
+  static const settings = "/settings";
   static const auth = "/auth";
   static const account = "/account";
   static const contact = "/contact";

@@ -18,7 +18,7 @@ class FBFireStore {
   // static final userdetail = fb.collection('userdetail');
   static final mainCategory = fb.collection('mainCategory');
   static final categorySet = fb.collection('categorySet');
-  static final setting = fb.collection('setting');
+  static final setting = fb.collection('settings').doc('sets');
   static final orderProduct = fb.collection('orderProduct');
   // static final delCharges = fb.collection('delCharges');
 }
@@ -27,6 +27,7 @@ class FBStorage {
   static final fbstore = FirebaseStorage.instance;
   static final category = fbstore.ref().child('category');
   static final food = fbstore.ref().child('food');
+  static final images = fbstore.ref().child('images');
   // static final otherCertis = fb.ref().child('otherCertis');
 }
 
