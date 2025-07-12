@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clothing/views/account/account.dart';
 import 'package:clothing/views/home/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -37,16 +38,16 @@ List<RouteBase> get _routes {
       // const NoTransitionPage(child: Wrapper(body: Homepage())),
     ),
 
-    // GoRoute(
-    //   path: Routes.auth,
-    //   pageBuilder:
-    //       (BuildContext context, GoRouterState state) => NoTransitionPage(
-    //         child: AuthPage(
-    //           goTo: state.extra != null ? state.extra as String : null,
-    //         ),
-    //       ),
-    //   // LoginPage()),
-    // ),
+    GoRoute(
+      path: Routes.auth,
+      pageBuilder:
+          (BuildContext context, GoRouterState state) => NoTransitionPage(
+            child: AccountPage(
+              // goTo: state.extra != null ? state.extra as String : null,
+            ),
+          ),
+      //   // LoginPage()),
+    ),
     // GoRoute(
     //   path: Routes.account,
     //   pageBuilder:
