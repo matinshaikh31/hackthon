@@ -210,9 +210,14 @@ class NavBar extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           InkWell(
-            onTap: () {
-              loginDialog(context);
-            },
+            onTap:
+                FBAuth.auth.currentUser != null
+                    ? () {
+                      context.go(Routes.account);
+                    }
+                    : () {
+                      loginDialog(context);
+                    },
             child: CircleAvatar(
               radius: 20,
               backgroundColor: Colors.grey.shade100,
@@ -305,9 +310,9 @@ class NavBar extends StatelessWidget {
                                   const SizedBox(height: 24),
                                   const SizedBox(height: 16),
                                   TextField(
-                                    controller: _namectrl,
+                                    controller: _emailCtrl,
                                     decoration: const InputDecoration(
-                                      labelText: 'Name',
+                                      labelText: 'Email',
                                       border: OutlineInputBorder(),
                                     ),
                                   ),
