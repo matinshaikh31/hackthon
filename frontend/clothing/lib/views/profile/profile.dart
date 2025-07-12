@@ -168,12 +168,15 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const Text('Sustainable Fashion Enthusiast'),
             const SizedBox(height: 8),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.location_on_outlined, size: 14),
                 SizedBox(width: 4),
-                Text('San Francisco, CA', style: TextStyle(fontSize: 12)),
+                Text(
+                  user?.address ?? 'Location',
+                  style: TextStyle(fontSize: 12),
+                ),
               ],
             ),
             const Row(
