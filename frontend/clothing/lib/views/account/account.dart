@@ -1,3 +1,4 @@
+import 'package:clothing/shared/common_wrapper.dart';
 import 'package:clothing/shared/firebase.dart';
 import 'package:clothing/shared/router.dart';
 import 'package:clothing/views/account/methods.dart';
@@ -36,9 +37,9 @@ class _AccountPageState extends State<AccountPage>
     final screenWidth = MediaQuery.sizeOf(context).width;
     final isMobileScreen = screenWidth < desktopMinSize;
 
-    return Wrapper(
-      scaffoldBackgroundColor: const Color(0xfffbfbfb),
-      body: ResponsiveWid(
+    return CommonWrapper(
+      // backgroundColor: const Color(0xfffbfbfb),
+      child: ResponsiveWid(
         mobile:
             isLoggedIn()
                 ? _buildMobileTabs()
