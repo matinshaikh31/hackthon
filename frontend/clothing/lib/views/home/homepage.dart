@@ -63,6 +63,7 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: const Color(0xFF66BB8A),
       height: 600,
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
