@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "807829589402",
+    "firebase_url": "https://furniture-renting-91dac-default-rtdb.firebaseio.com",
+    "project_id": "furniture-renting-91dac",
+    "storage_bucket": "furniture-renting-91dac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807829589402:android:f0f0f16db6fe173949fe23",
+        "android_client_info": {
+          "package_name": "com.example.clothing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCreB1zWGExyp-bDr3irnSFyea-XrD7LIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
