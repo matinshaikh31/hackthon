@@ -202,10 +202,15 @@ class NavBar extends StatelessWidget {
             child: const Text("1,250 pts"),
           ),
           const SizedBox(width: 16),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.grey.shade100,
-            child: const Icon(Icons.person, color: Colors.grey),
+          InkWell(
+            onTap: () {
+              context.go(Routes.account);
+            },
+            child: CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.grey.shade100,
+              child: const Icon(Icons.person, color: Colors.grey),
+            ),
           ),
           const SizedBox(width: 16),
           ElevatedButton.icon(
@@ -281,15 +286,10 @@ class _FeatureIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        InkWell(
-          onTap: () {
-            context.go(Routes.account);
-          },
-          child: CircleAvatar(
-            radius: 28,
-            backgroundColor: Colors.white,
-            child: Icon(icon, color: Colors.green.shade700, size: 28),
-          ),
+        CircleAvatar(
+          radius: 28,
+          backgroundColor: Colors.white,
+          child: Icon(icon, color: Colors.green.shade700, size: 28),
         ),
         const SizedBox(height: 12),
         Text(
