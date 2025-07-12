@@ -1,3 +1,4 @@
+import 'package:clothing/shared/firebase.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -146,4 +147,17 @@ Future<Uint8List> imageCompressor(Uint8List list) async {
     quality: 70,
   );
   return result;
+}
+
+Future<String?> uploadGalleryFiles(SelectedImage imageFile) async {
+  try {
+    final imageRef = FBStorage.images.child(
+      '${DateTime.now().millisecondsSinceEpoch}.${imageFile.extention}',
+    );
+    final task = await imageRef.putData(imageFile.uInt8List);
+    return await task.ref.getDownloadURL();
+  } on Exception catch (e) {
+    debugPrint(e.toString());
+    return null;
+  }
 }

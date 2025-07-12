@@ -1,4 +1,8 @@
+import 'package:clothing/controller/mainController.dart';
+import 'package:clothing/services/image_picker.dart';
 import 'package:clothing/shared/common_wrapper.dart';
+import 'package:clothing/shared/firebase.dart';
+import 'package:clothing/shared/methods.dart';
 import 'package:clothing/shared/router.dart';
 import 'package:clothing/views/auth/login_page.dart';
 import 'package:clothing/views/home/data/dummyProduct.dart';
@@ -6,7 +10,12 @@ import 'package:clothing/views/home/widget/footer.dart';
 import 'package:clothing/views/home/widget/how_it_work_section.dart';
 import 'package:clothing/views/home/widget/impact_section.dart';
 import 'package:clothing/views/home/widget/product_section.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
@@ -221,7 +230,250 @@ class NavBar extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () async {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  final pnameCtrl = TextEditingController();
+                  final ppointsCtrl = TextEditingController();
+                  final pdescCtrl = TextEditingController();
+                  SelectedImage? pimageCtrl;
+                  String? category;
+                  bool forSwap = false;
+                  bool isLoading = false;
+                  List<String> tags = [];
+                  return Dialog(
+                    surfaceTintColor: Colors.white,
+                    backgroundColor: Colors.white,
+                    child: StatefulBuilder(
+                      builder: (context, setState2) {
+                        return Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 400,
+                            maxHeight: 600,
+                          ),
+                          child: SingleChildScrollView(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Add Product",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 12),
+                                Text("Product Name"),
+                                SizedBox(height: 3),
+                                TextFormField(
+                                  controller: pnameCtrl,
+                                  decoration: inpDecor().copyWith(
+                                    hintText: 'Product Name',
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text("Product Points"),
+                                SizedBox(height: 3),
+                                TextFormField(
+                                  controller: ppointsCtrl,
+                                  decoration: inpDecor().copyWith(
+                                    hintText: 'Product Points',
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text("Product Category"),
+                                SizedBox(height: 3),
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButtonFormField<String>(
+                                    decoration: inpDecor().copyWith(
+                                      hintText: 'Select Category',
+                                    ),
+                                    value: category,
+                                    items: [
+                                      ...List.generate(
+                                        Get.find<MainController>()
+                                            .settings!
+                                            .categories
+                                            .length,
+                                        (index) {
+                                          return DropdownMenuItem(
+                                            value:
+                                                Get.find<MainController>()
+                                                    .settings!
+                                                    .categories[index],
+                                            child: Text(
+                                              Get.find<MainController>()
+                                                  .settings!
+                                                  .categories[index],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      category = value;
+                                      setState2(() {});
+                                    },
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text("Product Description"),
+                                SizedBox(height: 3),
+                                TextFormField(
+                                  controller: pdescCtrl,
+                                  decoration: inpDecor().copyWith(
+                                    hintText: 'Product Description',
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text("Swap"),
+                                SizedBox(height: 3),
+                                Container(
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(7),
+
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  width: double.maxFinite,
+                                  child: Row(
+                                    children: [
+                                      Checkbox(
+                                        value: forSwap,
+                                        onChanged: (value) {
+                                          forSwap = value!;
+                                          setState2(() {});
+                                        },
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text("For Swap"),
+                                    ],
+                                  ),
+                                ),
+
+                                SizedBox(height: 10),
+                                Text("Product Image"),
+                                SizedBox(height: 3),
+                                InkWell(
+                                  onTap: () async {
+                                    final image = await ImagePickerService()
+                                        .pickImageNew(
+                                          context,
+                                          useCompressor: true,
+                                        );
+                                    setState2(() {
+                                      pimageCtrl = image;
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 100,
+                                    width: double.maxFinite,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey.shade300,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child:
+                                        pimageCtrl != null
+                                            ? Image.memory(
+                                              pimageCtrl!.uInt8List,
+                                              fit: BoxFit.cover,
+                                            )
+                                            : Center(
+                                              child: Icon(
+                                                CupertinoIcons.photo_camera,
+                                                color: Colors.grey.shade300,
+                                              ),
+                                            ),
+                                  ),
+                                ),
+                                SizedBox(height: 15),
+                                isLoading
+                                    ? Center(
+                                      child: Container(
+                                        height: 25,
+                                        width: 25,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            color: Colors.green.shade700,
+                                            strokeWidth: 3.5,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.green.shade700,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                        minimumSize: Size(double.maxFinite, 48),
+                                        elevation: 0,
+                                        shadowColor: Colors.transparent,
+                                      ),
+                                      onPressed: () async {
+                                        if (pimageCtrl == null) {
+                                          return;
+                                        }
+                                        setState2(() {
+                                          isLoading = true;
+                                        });
+                                        final imageUrl =
+                                            await uploadGalleryFiles(
+                                              pimageCtrl!,
+                                            );
+                                        await FirebaseFirestore.instance
+                                            .collection('products')
+                                            .add({
+                                              'productId': '',
+                                              'ownerId': '',
+                                              'title': pnameCtrl.text,
+                                              'description': pdescCtrl.text,
+                                              'imageUrl': imageUrl,
+                                              'category': category,
+                                              'tags': tags,
+                                              'price': num.tryParse(
+                                                ppointsCtrl.text,
+                                              ),
+                                              'isAvailable': true,
+                                              'forSwap': forSwap,
+                                            });
+                                        setState2(() {
+                                          isLoading = false;
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "Save",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              );
+            },
             icon: const Icon(Icons.add),
             label: const Text(
               "List Item",

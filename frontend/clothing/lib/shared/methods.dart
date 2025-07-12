@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:intl/intl.dart';
 
@@ -155,4 +157,62 @@ InputDecoration settingsTextFieldDecoration() {
       borderRadius: BorderRadius.circular(6),
     ),
   );
+}
+
+InputDecoration inpDecor() {
+  return InputDecoration(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(7),
+      borderSide: BorderSide(color: Colors.grey.shade400),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(7),
+      borderSide: BorderSide(color: Colors.grey.shade400),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(7),
+      borderSide: BorderSide(color: Colors.grey.shade400),
+    ),
+    disabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(7),
+      borderSide: BorderSide(color: Colors.grey.shade400),
+    ),
+    filled: true,
+    fillColor: Colors.transparent,
+    // fillColor: lightSkinColor,
+    // fillColor: Colors.white,
+  );
+}
+
+capilatlizeFirstLetter(String text) {
+  final splitList = text.trim().split(" ");
+  List<String> capilatlizedString = [];
+  for (var element in splitList) {
+    capilatlizedString.addIf(
+      element.capitalizeFirst != null,
+      element.capitalize!,
+    );
+  }
+  return capilatlizedString.join(" ");
+}
+
+showErrorAppSnackBar(BuildContext context, String message) {
+  // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //     content: ));
+
+  final snackBar = SnackBar(
+    content: Row(
+      children: [
+        const Icon(
+          CupertinoIcons.exclamationmark_octagon,
+          color: Colors.red,
+          size: 25,
+        ),
+        const SizedBox(width: 7),
+        Text(message),
+      ],
+    ),
+    duration: const Duration(seconds: 2),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

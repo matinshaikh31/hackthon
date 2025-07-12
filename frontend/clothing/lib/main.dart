@@ -5,23 +5,33 @@ import 'package:clothing/controller/mainController.dart';
 import 'package:clothing/firebase_options.dart';
 import 'package:clothing/shared/router.dart';
 import 'package:clothing/shared/theme.dart';
-import 'package:clothing/views/home/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/instance_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.android);
-  Get.put(AuthCtrl());
-  Get.put(MainController());
+
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Get.put(AuthCtrl());
+    Get.put(MainController());
+  }
 
   // This widget is the root of your application.
   @override
