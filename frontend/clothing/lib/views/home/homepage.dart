@@ -1,6 +1,8 @@
+import 'package:clothing/views/home/data/dummyProduct.dart';
 import 'package:clothing/views/home/widget/footer.dart';
 import 'package:clothing/views/home/widget/how_it_work_section.dart';
 import 'package:clothing/views/home/widget/impact_section.dart';
+import 'package:clothing/views/home/widget/product_section.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -105,17 +107,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      color: Colors.white,
-                      height: 500,
-                      child: Text("MAtin"),
-                    ),
-                  ),
-                ],
-              ),
+              FeaturedItemsSection(products: dummyProducts),
 
               HowReWearWorksSection(),
               const ImpactSection(),
