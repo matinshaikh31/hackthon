@@ -6,6 +6,11 @@ class PurchaseModel {
   final int price;
   final DateTime purchasedAt;
 
+  // New fields
+  final String image;
+  final String name;
+  final String description;
+
   PurchaseModel({
     required this.purchaseId,
     required this.buyerId,
@@ -13,6 +18,9 @@ class PurchaseModel {
     required this.productId,
     required this.price,
     required this.purchasedAt,
+    required this.image,
+    required this.name,
+    required this.description,
   });
 
   factory PurchaseModel.fromSnapshot(Map<String, dynamic> json) {
@@ -23,6 +31,9 @@ class PurchaseModel {
       productId: json['productId'],
       price: json['price'],
       purchasedAt: DateTime.parse(json['purchasedAt']),
+      image: json['image'] ?? '',
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
     );
   }
 
@@ -33,6 +44,9 @@ class PurchaseModel {
     'productId': productId,
     'price': price,
     'purchasedAt': purchasedAt.toIso8601String(),
+    'image': image,
+    'name': name,
+    'description': description,
   };
 
   Map<String, dynamic> toJson() => toMap();
