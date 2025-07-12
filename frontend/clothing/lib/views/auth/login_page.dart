@@ -63,12 +63,7 @@ class _LoginPageState extends State<LoginPage> {
       emailCtrl: _emailCtrl,
       passCtrl: _passCtrl,
       footer: TextButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const RegisterPage()),
-          );
-        },
+        onPressed: () {},
         child: const Text("Don’t have an account? Register"),
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:clothing/models/productModel.dart';
+import 'package:clothing/shared/router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class FeaturedItemsSection extends StatelessWidget {
@@ -169,7 +171,9 @@ class ProductCard extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.go('${Routes.product}/${product.productId}');
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF2C6E49),
                     ),

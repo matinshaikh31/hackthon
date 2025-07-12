@@ -131,7 +131,6 @@ Future<dynamic> loginDialog(BuildContext context) {
                         padding: const EdgeInsets.symmetric(horizontal: 70),
                         child: Center(
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
@@ -156,12 +155,12 @@ Future<dynamic> loginDialog(BuildContext context) {
                               const SizedBox(height: 15),
 
                               // Register Link
-                              // _buildRegisterLink(authCtrl, context),
-                              // const SizedBox(height: 12),
+                              _buildRegisterLink(authCtrl, context),
+                              const SizedBox(height: 12),
 
-                              // _orDivider(),
-                              // const SizedBox(height: 12),
-                              // // _otherLoginMethods(context),
+                              _orDivider(),
+                              const SizedBox(height: 12),
+                              _otherLoginMethods(context),
                             ],
                           ),
                         ),

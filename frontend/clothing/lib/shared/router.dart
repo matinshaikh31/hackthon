@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:clothing/views/account/account.dart';
 import 'package:clothing/views/home/homepage.dart';
+import 'package:clothing/views/product/productdetail.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -45,6 +46,14 @@ List<RouteBase> get _routes {
             child: AccountPage(
               // child: state.extra != null ? state.extra as String : null,
             ),
+          ),
+      //   // LoginPage()),
+    ),
+    GoRoute(
+      path: '${Routes.product}/:id',
+      pageBuilder:
+          (BuildContext context, GoRouterState state) => NoTransitionPage(
+            child: Productdetailpage(productId: state.pathParameters['id']!),
           ),
       //   // LoginPage()),
     ),
