@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _googleSignIn() async {
     try {
       final googleUser = await GoogleSignIn.instance.authenticate();
-      final googleAuth = await googleUser?.authentication;
+      final googleAuth = await googleUser.authentication;
 
       if (googleAuth != null) {
         final credential = GoogleAuthProvider.credential(
