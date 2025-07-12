@@ -1,10 +1,12 @@
 import 'package:clothing/shared/common_wrapper.dart';
+import 'package:clothing/shared/router.dart';
 import 'package:clothing/views/home/data/dummyProduct.dart';
 import 'package:clothing/views/home/widget/footer.dart';
 import 'package:clothing/views/home/widget/how_it_work_section.dart';
 import 'package:clothing/views/home/widget/impact_section.dart';
 import 'package:clothing/views/home/widget/product_section.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -279,10 +281,15 @@ class _FeatureIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 28,
-          backgroundColor: Colors.white,
-          child: Icon(icon, color: Colors.green.shade700, size: 28),
+        InkWell(
+          onTap: () {
+            context.go(Routes.account);
+          },
+          child: CircleAvatar(
+            radius: 28,
+            backgroundColor: Colors.white,
+            child: Icon(icon, color: Colors.green.shade700, size: 28),
+          ),
         ),
         const SizedBox(height: 12),
         Text(
