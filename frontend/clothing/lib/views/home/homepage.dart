@@ -1,6 +1,9 @@
+import 'package:clothing/shared/common_wrapper.dart';
+import 'package:clothing/views/home/data/dummyProduct.dart';
 import 'package:clothing/views/home/widget/footer.dart';
 import 'package:clothing/views/home/widget/how_it_work_section.dart';
 import 'package:clothing/views/home/widget/impact_section.dart';
+import 'package:clothing/views/home/widget/product_section.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,115 +16,127 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF66BB8A),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const NavBar(),
-              Container(
-                height: 600,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 32,
+        child:
+            true
+                ? CommonWrapper(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // const NavBar(),
+                        HeroSection(isMobile: isMobile),
+                        FeaturedItemsSection(products: dummyProducts),
+
+                        HowReWearWorksSection(),
+                        const ImpactSection(),
+                        // const Footer(),
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                )
+                : SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(height: 32),
-                            Text(
-                              "Give Your Clothes\nA Second Life",
-                              textAlign: TextAlign.center,
-                              style: Theme.of(
-                                context,
-                              ).textTheme.headlineLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: isMobile ? 24 : 50,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              "Join the sustainable fashion revolution. Swap, redeem, and\n"
-                              "discover amazing pre-loved clothes while earning points for every contribution.",
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyLarge
-                                  ?.copyWith(color: Colors.white70),
-                            ),
-                            const SizedBox(height: 24),
-                            Wrap(
-                              spacing: 16,
-                              runSpacing: 16,
-                              alignment: WrapAlignment.center,
-                              children: [
-                                _ActionButton(
-                                  text: 'Start Swapping',
-                                  onPressed: () {},
-                                ),
-                                _ActionButton(
-                                  text: 'Browse Items',
-                                  disabled: true,
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 48),
-                            Wrap(
-                              spacing: 48,
-                              runSpacing: 32,
-                              alignment: WrapAlignment.center,
-                              children: const [
-                                _FeatureIcon(
-                                  icon: Icons.loop,
-                                  title: 'Sustainable',
-                                  subtitle:
-                                      'Reduce fashion waste by giving\nclothes new homes',
-                                ),
-                                _FeatureIcon(
-                                  icon: Icons.groups,
-                                  title: 'Community',
-                                  subtitle:
-                                      'Connect with like-minded fashion\nenthusiasts',
-                                ),
-                                _FeatureIcon(
-                                  icon: Icons.emoji_events,
-                                  title: 'Rewarding',
-                                  subtitle:
-                                      'Earn points for every item you list\nand swap',
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      const NavBar(),
+                      HeroSection(isMobile: isMobile),
+                      FeaturedItemsSection(products: dummyProducts),
+
+                      HowReWearWorksSection(),
+                      const ImpactSection(),
+                      const Footer(),
                     ],
                   ),
                 ),
-              ),
-              Row(
+      ),
+    );
+  }
+}
+
+class HeroSection extends StatelessWidget {
+  const HeroSection({super.key, required this.isMobile});
+
+  final bool isMobile;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 600,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Container(
+                  SizedBox(height: 32),
+                  Text(
+                    "Give Your Clothes\nA Second Life",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      height: 500,
-                      child: Text("MAtin"),
+                      fontSize: isMobile ? 24 : 50,
                     ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    "Join the sustainable fashion revolution. Swap, redeem, and\n"
+                    "discover amazing pre-loved clothes while earning points for every contribution.",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: Colors.white70),
+                  ),
+                  const SizedBox(height: 24),
+                  Wrap(
+                    spacing: 16,
+                    runSpacing: 16,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      _ActionButton(text: 'Start Swapping', onPressed: () {}),
+                      _ActionButton(
+                        text: 'Browse Items',
+                        disabled: true,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 48),
+                  Wrap(
+                    spacing: 48,
+                    runSpacing: 32,
+                    alignment: WrapAlignment.center,
+                    children: const [
+                      _FeatureIcon(
+                        icon: Icons.loop,
+                        title: 'Sustainable',
+                        subtitle:
+                            'Reduce fashion waste by giving\nclothes new homes',
+                      ),
+                      _FeatureIcon(
+                        icon: Icons.groups,
+                        title: 'Community',
+                        subtitle:
+                            'Connect with like-minded fashion\nenthusiasts',
+                      ),
+                      _FeatureIcon(
+                        icon: Icons.emoji_events,
+                        title: 'Rewarding',
+                        subtitle:
+                            'Earn points for every item you list\nand swap',
+                      ),
+                    ],
                   ),
                 ],
               ),
-
-              HowReWearWorksSection(),
-              const ImpactSection(),
-              const Footer(),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
