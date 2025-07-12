@@ -134,11 +134,11 @@ class AuthScaffold extends StatelessWidget {
                 const SizedBox(height: 16),
                 const Center(child: Text("or")),
                 const SizedBox(height: 16),
-                OutlinedButton.icon(
-                  onPressed: isLoading ? null : onGoogle,
-                  icon: Image.asset('assets/google_icon.png', height: 20),
-                  label: const Text("Continue with Google"),
-                ),
+                // OutlinedButton.icon(
+                //   onPressed: isLoading ? null : onGoogle,
+                //   icon: Image.asset('assets/google_icon.png', height: 20),
+                //   label: const Text("Continue with Google"),
+                // ),
                 const SizedBox(height: 12),
                 footer,
               ],

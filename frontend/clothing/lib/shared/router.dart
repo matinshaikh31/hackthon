@@ -6,6 +6,8 @@ import 'package:clothing/views/admin/order/orders.dart';
 import 'package:clothing/views/admin/settings/settings.dart';
 import 'package:clothing/views/home/homepage.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:clothing/views/product/productdetail.dart';
+import 'package:clothing/views/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -58,44 +60,21 @@ List<RouteBase> get _routes {
       // const NoTransitionPage(child: Wrapper(body: Homepage())),
     ),
 
-    ShellRoute(
-      // builder: (context, state, child) {
-      //   return AccountPage(child: child);
-      // },
-      pageBuilder: (context, state, child) {
-        return NoTransitionPage(child: AdminHomePage(child: child));
-      },
-      routes: [
-        GoRoute(
-          path: Routes.users,
-          pageBuilder:
-              (BuildContext context, GoRouterState state) =>
-                  const NoTransitionPage(child: ManageUsers()),
-        ),
-        GoRoute(
-          path: Routes.orders,
-          pageBuilder:
-              (BuildContext context, GoRouterState state) =>
-                  const NoTransitionPage(child: OrdersPage()),
-        ),
-        GoRoute(
-          path: Routes.settings,
-          pageBuilder:
-              (BuildContext context, GoRouterState state) =>
-                  const NoTransitionPage(child: SettingsPage()),
-        ),
-      ],
+    GoRoute(
+      path: Routes.account,
+      pageBuilder:
+          (BuildContext context, GoRouterState state) =>
+              NoTransitionPage(child: ProfilePage()),
+      //   // LoginPage()),
     ),
-    // GoRoute(
-    //   path: Routes.auth,
-    //   pageBuilder:
-    //       (BuildContext context, GoRouterState state) => NoTransitionPage(
-    //         child: AuthPage(
-    //           goTo: state.extra != null ? state.extra as String : null,
-    //         ),
-    //       ),
-    //   // LoginPage()),
-    // ),
+    GoRoute(
+      path: '${Routes.product}/:id',
+      pageBuilder:
+          (BuildContext context, GoRouterState state) => NoTransitionPage(
+            child: Productdetailpage(productId: state.pathParameters['id']!),
+          ),
+      //   // LoginPage()),
+    ),
     // GoRoute(
     //   path: Routes.account,
     //   pageBuilder:

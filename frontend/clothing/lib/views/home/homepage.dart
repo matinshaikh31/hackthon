@@ -5,6 +5,7 @@ import 'package:clothing/shared/firebase.dart';
 import 'package:clothing/shared/methods.dart';
 import 'package:clothing/shared/router.dart';
 import 'package:clothing/views/auth/login_page.dart';
+import 'package:clothing/views/auth/registartion_page.dart';
 import 'package:clothing/views/home/data/dummyProduct.dart';
 import 'package:clothing/views/home/widget/footer.dart';
 import 'package:clothing/views/home/widget/how_it_work_section.dart';
@@ -17,6 +18,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -214,14 +216,14 @@ class NavBar extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           InkWell(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return Dialog(child: LoginPage());
-                },
-              );
-            },
+            onTap:
+                FBAuth.auth.currentUser != null
+                    ? () {
+                      context.go(Routes.account);
+                    }
+                    : () {
+                      loginDialog(context);
+                    },
             child: CircleAvatar(
               radius: 20,
               backgroundColor: Colors.grey.shade100,
@@ -495,6 +497,364 @@ class NavBar extends StatelessWidget {
       ),
     );
   }
+
+  Future<dynamic> loginDialog(BuildContext context) {
+    bool forLogin = true;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        final _emailCtrl = TextEditingController();
+        final _passCtrl = TextEditingController();
+        final _cnfpassCtrl = TextEditingController();
+
+        final _namectrl = TextEditingController();
+
+        final _phoneCtrl = TextEditingController();
+
+        bool isLoading = false;
+        return StatefulBuilder(
+          builder: (context, setState2) {
+            return Dialog(
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.transparent,
+              child: Container(
+                constraints: BoxConstraints(maxHeight: 800, maxWidth: 500),
+                child:
+                    forLogin
+                        ? Center(
+                          child: SingleChildScrollView(
+                            padding: const EdgeInsets.all(32),
+                            child: Container(
+                              constraints: const BoxConstraints(maxWidth: 420),
+                              padding: const EdgeInsets.all(24),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 12,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    'Welcome Back 👋',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF1B4332),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Log in to continue',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 24),
+                                  const SizedBox(height: 16),
+                                  TextField(
+                                    controller: _emailCtrl,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Email',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  TextField(
+                                    controller: _passCtrl,
+                                    obscureText: true,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Password',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 24),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      setState2(() => isLoading = true);
+                                      try {
+                                        await FirebaseAuth.instance
+                                            .signInWithEmailAndPassword(
+                                              email: _emailCtrl.text.trim(),
+                                              password: _passCtrl.text.trim(),
+                                            );
+                                        Navigator.of(context).pop();
+                                      } on FirebaseAuthException catch (e) {
+                                        showError(
+                                          context,
+                                          e.message ?? "Login failed",
+                                        );
+                                      } finally {
+                                        setState2(() => isLoading = false);
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF2C6E49),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 14,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Login',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  const Center(child: Text("or")),
+                                  const SizedBox(height: 16),
+                                  OutlinedButton.icon(
+                                    onPressed: () async {
+                                      try {
+                                        final googleUser =
+                                            await GoogleSignIn.instance
+                                                .authenticate();
+                                        final googleAuth =
+                                            await googleUser.authentication;
+
+                                        if (googleAuth != null) {
+                                          final credential =
+                                              GoogleAuthProvider.credential(
+                                                idToken: googleAuth.idToken,
+                                              );
+                                          await FirebaseAuth.instance
+                                              .signInWithCredential(credential);
+                                        }
+                                      } catch (e) {
+                                        showError(
+                                          context,
+                                          "Google Sign-In failed",
+                                        );
+                                      }
+                                    },
+                                    icon: Image.asset(
+                                      'assets/google_icon.png',
+                                      height: 20,
+                                    ),
+                                    label: const Text("Continue with Google"),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  TextButton(
+                                    onPressed: () {
+                                      forLogin = false;
+                                      setState2(() {});
+                                    },
+                                    child: const Text(
+                                      "Don’t have an account? Register",
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                        : Center(
+                          child: SingleChildScrollView(
+                            padding: const EdgeInsets.all(32),
+                            child: Container(
+                              constraints: const BoxConstraints(maxWidth: 420),
+                              padding: const EdgeInsets.all(24),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 12,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    'Create Account 🎉',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF1B4332),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Join ReWear and make impact',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 24),
+                                  const SizedBox(height: 16),
+                                  TextField(
+                                    controller: _namectrl,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Name',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 16),
+                                  TextField(
+                                    controller: _phoneCtrl,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Phone',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+
+                                  TextField(
+                                    controller: _emailCtrl,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Email',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 16),
+                                  TextField(
+                                    controller: _passCtrl,
+                                    obscureText: true,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Password',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 16),
+                                  TextField(
+                                    controller: _cnfpassCtrl,
+                                    obscureText: true,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Confirm Password',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 24),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      if (_cnfpassCtrl.text.toLowerCase() !=
+                                          _passCtrl.text.toLowerCase()) {
+                                        showError(
+                                          context,
+                                          "Password does not match",
+                                        );
+                                        return;
+                                      }
+                                      setState2(() => isLoading = true);
+                                      try {
+                                        final res = await FirebaseAuth.instance
+                                            .createUserWithEmailAndPassword(
+                                              email: _emailCtrl.text.trim(),
+                                              password: _passCtrl.text.trim(),
+                                            );
+                                        if (res.user != null) {
+                                          await FirebaseFirestore.instance
+                                              .collection('users')
+                                              .doc(res.user!.uid)
+                                              .set({
+                                                'uid': res.user!.uid,
+                                                'name': _namectrl.text.trim(),
+                                                'email': _emailCtrl.text.trim(),
+                                                'phone': _phoneCtrl.text.trim(),
+                                                'address': '',
+                                                'balance': 1000,
+                                                'isAdmin': false,
+                                              });
+                                          Navigator.of(context).pop();
+                                        }
+                                      } on FirebaseAuthException catch (e) {
+                                        showError(
+                                          context,
+                                          e.message ?? "Registration failed",
+                                        );
+                                      } finally {
+                                        setState2(() => isLoading = false);
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF2C6E49),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 14,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Register',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  const Center(child: Text("or")),
+                                  const SizedBox(height: 16),
+                                  OutlinedButton.icon(
+                                    onPressed:
+                                        isLoading
+                                            ? null
+                                            : () async {
+                                              try {
+                                                final googleUser =
+                                                    await GoogleSignIn.instance
+                                                        .authenticate();
+                                                final googleAuth =
+                                                    await googleUser
+                                                        ?.authentication;
+
+                                                if (googleAuth != null) {
+                                                  final credential =
+                                                      GoogleAuthProvider.credential(
+                                                        idToken:
+                                                            googleAuth.idToken,
+                                                        accessToken:
+                                                            googleAuth.idToken,
+                                                      );
+                                                  await FirebaseAuth.instance
+                                                      .signInWithCredential(
+                                                        credential,
+                                                      );
+                                                }
+                                              } catch (e) {
+                                                showError(
+                                                  context,
+                                                  "Google Sign-In failed",
+                                                );
+                                              }
+                                            },
+                                    icon: Image.asset(
+                                      'assets/google_icon.png',
+                                      height: 20,
+                                    ),
+                                    label: const Text("Continue with Google"),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text(
+                                      "Already have an account? Login",
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 }
 
 class _ActionButton extends StatelessWidget {
@@ -568,4 +928,10 @@ class _FeatureIcon extends StatelessWidget {
       ],
     );
   }
+}
+
+void showError(BuildContext context, String message) {
+  ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text(message), backgroundColor: Colors.red));
 }

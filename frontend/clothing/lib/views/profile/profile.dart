@@ -1,8 +1,12 @@
+import 'package:clothing/controller/auth_ctrl.dart';
+import 'package:clothing/controller/mainController.dart';
+import 'package:clothing/models/userModel.dart';
 import 'package:clothing/shared/common_wrapper.dart';
 import 'package:clothing/views/home/data/dummyProduct.dart';
 import 'package:clothing/views/home/widget/product_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -19,49 +23,54 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return CommonWrapper(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 250, vertical: 24),
-        color: Colors.grey.shade100,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// Left Column
-              SizedBox(
-                width: 300,
-                child: Column(
-                  children: [
-                    _profileCard(),
-                    const SizedBox(height: 16),
-                    _statsCard(),
-                    const SizedBox(height: 16),
-                    _achievementsCard(),
-                  ],
-                ),
-              ),
+      child: GetBuilder<MainController>(
+        builder: (cntrl) {
+          print(cntrl.currentUser);
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 250, vertical: 24),
+            color: Colors.grey.shade100,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// Left Column
+                  SizedBox(
+                    width: 300,
+                    child: Column(
+                      children: [
+                        _profileCard(cntrl.currentUser),
+                        const SizedBox(height: 16),
+                        _statsCard(),
+                        const SizedBox(height: 16),
+                        _achievementsCard(),
+                      ],
+                    ),
+                  ),
 
-              const SizedBox(width: 24),
+                  const SizedBox(width: 24),
 
-              /// Right Column
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _tabsHeader(),
-                    const SizedBox(height: 16),
-                    if (selectedTab == 0) ...[
-                      _myItemsHeader(),
-                      const SizedBox(height: 16),
-                      _productsGrid(),
-                    ] else
-                      _tabPlaceholder(tabs[selectedTab]),
-                  ],
-                ),
+                  /// Right Column
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _tabsHeader(),
+                        const SizedBox(height: 16),
+                        if (selectedTab == 0) ...[
+                          _myItemsHeader(),
+                          const SizedBox(height: 16),
+                          _productsGrid(),
+                        ] else
+                          _tabPlaceholder(tabs[selectedTab]),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -144,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _profileCard() {
+  Widget _profileCard(UserModel? user) {
     return Card(
       color: Colors.white,
       child: Padding(
@@ -153,8 +162,8 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             const CircleAvatar(radius: 40, backgroundColor: Colors.grey),
             const SizedBox(height: 8),
-            const Text(
-              'Alex Smith',
+            Text(
+              user?.name ?? "",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const Text('Sustainable Fashion Enthusiast'),
