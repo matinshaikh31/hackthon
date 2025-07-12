@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clothing/views/home/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,7 +33,7 @@ List<RouteBase> get _routes {
       pageBuilder:
           (BuildContext context, GoRouterState state) =>
           // const NoTransitionPage(child: NewHomePage()),
-          const NoTransitionPage(child: Homepage()),
+          const NoTransitionPage(child: HomePage()),
       // const NoTransitionPage(child: Wrapper(body: Homepage())),
     ),
 
