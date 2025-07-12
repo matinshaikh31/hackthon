@@ -1,5 +1,6 @@
 import 'package:clothing/shared/common_wrapper.dart';
 import 'package:clothing/shared/router.dart';
+import 'package:clothing/views/auth/login_page.dart';
 import 'package:clothing/views/home/data/dummyProduct.dart';
 import 'package:clothing/views/home/widget/footer.dart';
 import 'package:clothing/views/home/widget/how_it_work_section.dart';
@@ -204,7 +205,12 @@ class NavBar extends StatelessWidget {
           const SizedBox(width: 16),
           InkWell(
             onTap: () {
-              context.go(Routes.account);
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return Dialog(child: LoginPage());
+                },
+              );
             },
             child: CircleAvatar(
               radius: 20,
