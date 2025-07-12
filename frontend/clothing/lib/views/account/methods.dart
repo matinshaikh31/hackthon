@@ -69,17 +69,17 @@ Future<dynamic> loginDialog(BuildContext context) {
                         children: [
                           Column(
                             children: [
-                              Container(
-                                constraints: const BoxConstraints(
-                                  maxHeight: 350,
-                                ),
-                                child: Image.asset(
-                                  "assets/images/login_side.png",
-                                  fit: BoxFit.cover,
-                                  height: double.maxFinite,
-                                  width: double.maxFinite,
-                                ),
-                              ),
+                              // Container(
+                              //   constraints: const BoxConstraints(
+                              //     maxHeight: 350,
+                              //   ),
+                              //   child: Image.asset(
+                              //     "assets/images/login_side.png",
+                              //     fit: BoxFit.cover,
+                              //     height: double.maxFinite,
+                              //     width: double.maxFinite,
+                              //   ),
+                              // ),
                               Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: Column(
@@ -125,65 +125,47 @@ Future<dynamic> loginDialog(BuildContext context) {
                       maxWidth: 1000,
                       maxHeight: 550,
                     ),
-                    child: Stack(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Image.asset(
-                                "assets/images/login_side.png",
-                                fit: BoxFit.cover,
-                                height: double.maxFinite,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 70),
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  loginText(),
+                                  Spacer(),
+                                  closeButton(false, authCtrl, context),
+                                ],
                               ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: SingleChildScrollView(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 70,
-                                  ),
-                                  child: Center(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        loginText(),
-                                        const SizedBox(height: 20),
+                              const SizedBox(height: 20),
 
-                                        // Email Field
-                                        _buildEmailField(authCtrl),
-                                        const SizedBox(height: 15),
+                              // Email Field
+                              _buildEmailField(authCtrl),
+                              const SizedBox(height: 15),
 
-                                        // Password Field
-                                        _buildPasswordField(
-                                          authCtrl,
-                                          setState2,
-                                        ),
-                                        const SizedBox(height: 25),
+                              // Password Field
+                              _buildPasswordField(authCtrl, setState2),
+                              const SizedBox(height: 25),
 
-                                        // Login Button
-                                        _buildLoginButton(authCtrl, context),
-                                        const SizedBox(height: 15),
+                              // Login Button
+                              _buildLoginButton(authCtrl, context),
+                              const SizedBox(height: 15),
 
-                                        // Register Link
-                                        _buildRegisterLink(authCtrl, context),
-                                        const SizedBox(height: 12),
+                              // Register Link
+                              // _buildRegisterLink(authCtrl, context),
+                              // const SizedBox(height: 12),
 
-                                        _orDivider(),
-                                        const SizedBox(height: 12),
-                                        _otherLoginMethods(context),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                              // _orDivider(),
+                              // const SizedBox(height: 12),
+                              // // _otherLoginMethods(context),
+                            ],
+                          ),
                         ),
-                        closeButton(false, authCtrl, context),
-                      ],
+                      ),
                     ),
                   ),
                 );
