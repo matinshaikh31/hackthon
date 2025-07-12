@@ -16,7 +16,7 @@ class AccountDetailsTab extends StatelessWidget {
             Text("Name: ${user.name ?? 'N/A'}"),
             Text("Email: ${user.email}"),
             Text("Phone: ${user.phone ?? 'N/A'}"),
-            Text("Wallet: ${user.wallet ?? 0} points"),
+            Text("Wallet: ${user.balance ?? 0} points"),
             Text("Address: ${user.address ?? 'Not added'}"),
           ],
         );

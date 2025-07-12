@@ -7,7 +7,7 @@ class UserModel {
   final String password;
   final String? phone;
   final String? address;
-  final WalletModel wallet;
+  final num balance;
   final bool isAdmin;
 
   UserModel({
@@ -17,7 +17,7 @@ class UserModel {
     required this.password,
     this.phone,
     this.address,
-    required this.wallet,
+    required this.balance,
     this.isAdmin = false,
   });
 
@@ -29,7 +29,7 @@ class UserModel {
       password: json['password'],
       phone: json['phone'],
       address: json['address'],
-      wallet: WalletModel.fromSnapshot(json['wallet']),
+      balance: json['balance'],
       isAdmin: json['isAdmin'] ?? false,
     );
   }
@@ -41,7 +41,7 @@ class UserModel {
     'password': password,
     if (phone != null) 'phone': phone,
     if (address != null) 'address': address,
-    'wallet': wallet.toMap(),
+    'balance': balance,
     'isAdmin': isAdmin,
   };
 
