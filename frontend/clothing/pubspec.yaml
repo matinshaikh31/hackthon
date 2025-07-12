@@ -42,6 +42,24 @@ dependencies:
   google_fonts: ^6.2.1
   carousel_slider: ^5.1.1
   go_router: ^16.0.0
+  flutter_staggered_grid_view: ^0.7.0
+  intl: ^0.19.0
+  flutter_animated_button: ^2.0.3
+  cached_network_image: ^3.4.1
+  file_picker: ^8.0.3
+  flutter_image_compress: ^2.0.4
+  image_picker: ^1.0.4
+  loading_animation_widget: ^1.3.0
+  number_pagination: ^1.1.0
+  number_paginator: ^0.4.1
+  url_launcher: ^6.1.10
+  url_strategy: ^0.3.0
+  file_saver: ^0.2.12
+  archive: ^3.4.10
+  http: ^1.2.0
+  fuzzywuzzy: ^1.2.0
+  item_count_number_button: ^1.9.2
+  input_quantity: ^2.5.1
 
 dev_dependencies:
   flutter_test:
