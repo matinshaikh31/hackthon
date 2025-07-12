@@ -15,14 +15,16 @@ const themeColorLite = Color(0xfffcedec);
 const themeColor = Color(0xffe5b4ba);
 
 final themeData = ThemeData(
-    colorSchemeSeed: themeColor,
-    useMaterial3: true,
-    scaffoldBackgroundColor: Colors.white,
-    radioTheme: const RadioThemeData(
-      fillColor: WidgetStatePropertyAll(Colors.black),
-    ),
-    bottomSheetTheme:
-        const BottomSheetThemeData(surfaceTintColor: Colors.white),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.white,
-    ));
+  colorSchemeSeed: themeColor,
+  useMaterial3: true,
+  scaffoldBackgroundColor: Colors.white,
+  radioTheme: const RadioThemeData(
+    fillColor: WidgetStatePropertyAll(Colors.black),
+  ),
+  bottomSheetTheme: const BottomSheetThemeData(surfaceTintColor: Colors.white),
+  appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+);
+
+const darkborderColor = Color(0xffd88f77);
+
+const dashboardSelectedColor = Color.fromARGB(255, 255, 209, 196);

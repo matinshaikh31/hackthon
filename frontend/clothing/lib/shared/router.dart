@@ -39,11 +39,11 @@ List<RouteBase> get _routes {
     ),
 
     GoRoute(
-      path: Routes.auth,
+      path: Routes.account,
       pageBuilder:
           (BuildContext context, GoRouterState state) => NoTransitionPage(
             child: AccountPage(
-              // goTo: state.extra != null ? state.extra as String : null,
+              // child: state.extra != null ? state.extra as String : null,
             ),
           ),
       //   // LoginPage()),
