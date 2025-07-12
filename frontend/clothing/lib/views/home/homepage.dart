@@ -1,3 +1,6 @@
+import 'package:clothing/views/home/widget/footer.dart';
+import 'package:clothing/views/home/widget/how_it_work_section.dart';
+import 'package:clothing/views/home/widget/impact_section.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,90 +13,123 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF66BB8A),
       body: SafeArea(
-        child: Column(
-          children: [
-            const _TopBar(),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 32,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Give Your Clothes\nA Second Life",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.headlineLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const NavBar(),
+              Container(
+                height: 600,
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 32,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 32),
+                            Text(
+                              "Give Your Clothes\nA Second Life",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(
+                                context,
+                              ).textTheme.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: isMobile ? 24 : 50,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              "Join the sustainable fashion revolution. Swap, redeem, and\n"
+                              "discover amazing pre-loved clothes while earning points for every contribution.",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(color: Colors.white70),
+                            ),
+                            const SizedBox(height: 24),
+                            Wrap(
+                              spacing: 16,
+                              runSpacing: 16,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                _ActionButton(
+                                  text: 'Start Swapping',
+                                  onPressed: () {},
+                                ),
+                                _ActionButton(
+                                  text: 'Browse Items',
+                                  disabled: true,
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 48),
+                            Wrap(
+                              spacing: 48,
+                              runSpacing: 32,
+                              alignment: WrapAlignment.center,
+                              children: const [
+                                _FeatureIcon(
+                                  icon: Icons.loop,
+                                  title: 'Sustainable',
+                                  subtitle:
+                                      'Reduce fashion waste by giving\nclothes new homes',
+                                ),
+                                _FeatureIcon(
+                                  icon: Icons.groups,
+                                  title: 'Community',
+                                  subtitle:
+                                      'Connect with like-minded fashion\nenthusiasts',
+                                ),
+                                _FeatureIcon(
+                                  icon: Icons.emoji_events,
+                                  title: 'Rewarding',
+                                  subtitle:
+                                      'Earn points for every item you list\nand swap',
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      "Join the sustainable fashion revolution. Swap, redeem, and\n"
-                      "discover amazing pre-loved clothes while earning points for every contribution.",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: Colors.white70),
-                    ),
-                    const SizedBox(height: 24),
-                    Wrap(
-                      spacing: 16,
-                      runSpacing: 16,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        _ActionButton(text: 'Start Swapping', onPressed: () {}),
-                        _ActionButton(
-                          text: 'Browse Items',
-                          disabled: true,
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 48),
-                    Wrap(
-                      spacing: 48,
-                      runSpacing: 32,
-                      alignment: WrapAlignment.center,
-                      children: const [
-                        _FeatureIcon(
-                          icon: Icons.loop,
-                          title: 'Sustainable',
-                          subtitle:
-                              'Reduce fashion waste by giving\nclothes new homes',
-                        ),
-                        _FeatureIcon(
-                          icon: Icons.groups,
-                          title: 'Community',
-                          subtitle:
-                              'Connect with like-minded fashion\nenthusiasts',
-                        ),
-                        _FeatureIcon(
-                          icon: Icons.emoji_events,
-                          title: 'Rewarding',
-                          subtitle:
-                              'Earn points for every item you list\nand swap',
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      color: Colors.white,
+                      height: 500,
+                      child: Text("MAtin"),
+                    ),
+                  ),
+                ],
+              ),
+
+              HowReWearWorksSection(),
+              const ImpactSection(),
+              const Footer(),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _TopBar extends StatelessWidget {
-  const _TopBar();
+class NavBar extends StatelessWidget {
+  const NavBar();
 
   @override
   Widget build(BuildContext context) {
@@ -112,10 +148,31 @@ class _TopBar extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Spacer(),
-          TextButton(onPressed: () {}, child: const Text("Browse Items")),
-          TextButton(onPressed: () {}, child: const Text("How It Works")),
-          TextButton(onPressed: () {}, child: const Text("Community")),
+          SizedBox(width: 500),
+          TextButton(
+            onPressed: () {},
+            child: Text(
+              "Browse Items",
+              style: TextStyle(color: Colors.green.shade800),
+            ),
+          ),
+          SizedBox(width: 50),
+          TextButton(
+            onPressed: () {},
+            child: Text(
+              "How It Works",
+              style: TextStyle(color: Colors.green.shade800),
+            ),
+          ),
+          SizedBox(width: 50),
+          TextButton(
+            onPressed: () {},
+            child: Text(
+              "Community",
+              style: TextStyle(color: Colors.green.shade800),
+            ),
+          ),
+          Spacer(),
           const SizedBox(width: 16),
           const Icon(Icons.search),
           const SizedBox(width: 16),
@@ -128,10 +185,23 @@ class _TopBar extends StatelessWidget {
             child: const Text("1,250 pts"),
           ),
           const SizedBox(width: 16),
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.grey.shade100,
+            child: const Icon(Icons.person, color: Colors.grey),
+          ),
+          const SizedBox(width: 16),
           ElevatedButton.icon(
             onPressed: () {},
             icon: const Icon(Icons.add),
-            label: const Text("List Item"),
+            label: const Text(
+              "List Item",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green.shade700,
               shape: RoundedRectangleBorder(
@@ -139,6 +209,7 @@ class _TopBar extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(width: 100),
         ],
       ),
     );
