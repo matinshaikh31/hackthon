@@ -64,6 +64,7 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: const Color(0xFF66BB8A),
       height: 600,
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -158,12 +159,17 @@ class NavBar extends StatelessWidget {
         children: [
           const Icon(Icons.recycling, color: Colors.green),
           const SizedBox(width: 8),
-          Text(
-            "ReWear",
-            style: TextStyle(
-              color: Colors.green.shade800,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+          InkWell(
+            onTap: () {
+              context.go(Routes.home);
+            },
+            child: Text(
+              "ReWear",
+              style: TextStyle(
+                color: Colors.green.shade800,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           SizedBox(width: 500),

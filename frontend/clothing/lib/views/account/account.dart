@@ -252,7 +252,7 @@ class _AccountPageState extends State<AccountPage>
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
-                                'Wallet: ${user?.wallet.points ?? 0} pts',
+                                'Wallet: ${user?.balance ?? 0} pts',
                                 style: GoogleFonts.mulish(
                                   fontSize: 12,
                                   color: Colors.orange,
