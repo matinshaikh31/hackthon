@@ -37,7 +37,7 @@ class FeaturedItemsSection extends StatelessWidget {
                   runSpacing: 24,
                   alignment: WrapAlignment.center,
                   children:
-                      products.map((product) => _ProductCard(product)).toList(),
+                      products.map((product) => ProductCard(product)).toList(),
                 ),
                 const SizedBox(height: 40),
                 OutlinedButton(
@@ -56,10 +56,10 @@ class FeaturedItemsSection extends StatelessWidget {
   }
 }
 
-class _ProductCard extends StatelessWidget {
+class ProductCard extends StatelessWidget {
   final ProductModel product;
 
-  const _ProductCard(this.product);
+  const ProductCard(this.product);
 
   @override
   Widget build(BuildContext context) {
